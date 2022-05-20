@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: b-checkoutservice
+  name: sl-boutique-checkoutservice
 #  annotations:
 #    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
 #    service.beta.kubernetes.io/aws-load-balancer-type: external
@@ -13,5 +13,5 @@ spec:
       targetPort: 5050
       protocol: TCP
   selector:
-    app.kubernetes.io/name: b-checkoutservice
+    app.kubernetes.io/name: sl-boutique-checkoutservice
   type: ClusterIP
