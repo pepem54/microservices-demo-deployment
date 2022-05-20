@@ -24,22 +24,22 @@ spec:
               protocol: TCP
           env:
             - name: SHIPPING_SERVICE_ADDR
-              value: "b-shippingservice:50051"   
+              value: "sl-boutique-shipping:50051"   
             - name: PRODUCT_CATALOG_SERVICE_ADDR
-              value: "b-productcatalogservice:3550" 
+              value: "sl-boutique-productcatalog:3550" 
             - name: CART_SERVICE_ADDR
-              value: "b-cartservice:7070"
+              value: "sl-boutique-cart:7070"
             - name: RECOMMENDATION_SERVICE_ADDR
-              value: "b-recommendationservice:8080"                
+              value: "sl-boutique-recommendation:8080"                
             - name: CURRENCY_SERVICE_ADDR
-              value: "b-currencyservice:7000"
+              value: "sl-boutique-currency:7000"
             - name: EMAIL_SERVICE_ADDR
-              value: "b-emailservice:8080"
+              value: "sl-boutique-email:8080"
             - name: CHECKOUT_SERVICE_ADDR
-              value: "b-checkoutservice:5050"
+              value: "sl-boutique-checkout:5050"
             - name: AD_SERVICE_ADDR
-              value: "b-adservice:9555" 
+              value: "sl-boutique-ad:9555" 
             - name: PAYMENT_SERVICE_ADDR
-              value: "b-paymentservice:50051"
+              value: "sl-boutique-payment:50051" 
             - name: PORT
               value: "50051"                         
