@@ -24,20 +24,20 @@ spec:
               protocol: TCP
           env:
             - name: SHIPPING_SERVICE_ADDR
-              value: "sl-boutique-shipping:50051"   
+              value: "sl-boutique-shippingservice:50051"   
             - name: PRODUCT_CATALOG_SERVICE_ADDR
               value: "sl-boutique-productcatalog:3550" 
             - name: CART_SERVICE_ADDR
-              value: "sl-boutique-cart:7070"
+              value: "sl-boutique-cartservice:7070"
             - name: RECOMMENDATION_SERVICE_ADDR
-              value: "sl-boutique-recommendation:8080"                
+              value: "sl-boutique-recommendationservice:8080"                
             - name: CURRENCY_SERVICE_ADDR
-              value: "sl-boutique-currency:7000"
+              value: "sl-boutique-currencyservice:7000"
             - name: EMAIL_SERVICE_ADDR
-              value: "sl-boutique-email:8080"
+              value: "sl-boutique-emailservice:8080"
             - name: CHECKOUT_SERVICE_ADDR
-              value: "sl-boutique-checkout:5050"
+              value: "sl-boutique-checkoutservice:5050"
             - name: AD_SERVICE_ADDR
-              value: "sl-boutique-ad:9555" 
+              value: "sl-boutique-adservice:9555" 
             - name: PAYMENT_SERVICE_ADDR
-              value: "sl-boutique-payment:50051" 
+              value: "sl-boutique-paymentservice:50051"  
