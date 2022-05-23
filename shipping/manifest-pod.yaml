@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - image: 159616352881.dkr.ecr.eu-west-1.amazonaws.com/microservices-demo-shippingservice:latest
-          name: b-shippingservice
+          name: shippingservice
           imagePullPolicy: Always
           resources: {}
           ports:
