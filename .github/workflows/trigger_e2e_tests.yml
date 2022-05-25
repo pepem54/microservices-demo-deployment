@@ -53,10 +53,16 @@ jobs:
              cd tests             
              #npm install
              
+             #while [ $counter -le 10 ]
+             #do
+             #  echo $counter
+             #  ((counter++))
+             #done
+
              sleep 30s
-             echo `kubectl get svc sl-boutique-frontend -o json`
+             #echo `kubectl get svc sl-boutique-frontend -o json`
              #echo `kubectl get services`
-             export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .spec.clusterIP`         
+             export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
              echo $BOUTIQUE_FRONTEND_IP
              export TEST_ENDPOINT=$BOUTIQUE_FRONTEND_IP:8080
              #wget $BOUTIQUE_FRONTEND_IP:8080
