@@ -51,7 +51,7 @@ jobs:
              git clone https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git tests
              git remote set-url origin https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git
              cd tests             
-             #npm install
+             npm install
              
              #while [ $counter -le 10 ]
              #do
