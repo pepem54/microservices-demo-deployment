@@ -52,7 +52,9 @@ jobs:
              git remote set-url origin https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git
              cd tests             
              npm install
+             export BOUTIQUE_FRINTEND_IP=`kubectl get svc sl-boutique-frontend -o json | jq -r .status.loadBalancer.ingress[].hostname`
+             echo $BOUTIQUE_FRINTEND_IP
              export TEST_ENDPOINT=sl-boutique-frontend:8080
-             wget sl-boutique-frontend:8080
-             echo `cat index.html'
-             npm run test
+             #wget sl-boutique-frontend:8080
+             #echo `cat index.html'
+             #npm run test
