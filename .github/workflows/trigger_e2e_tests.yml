@@ -53,3 +53,4 @@ jobs:
              cd tests             
              npm install
              export TEST_ENDPOINT=http://sl-boutique-frontend:8080
+             npm run test
