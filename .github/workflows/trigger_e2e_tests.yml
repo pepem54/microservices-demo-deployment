@@ -36,7 +36,7 @@ jobs:
         #with:
         #  github-token: ${{ secrets.GH_PAT }}
         #  k3d-name: sl-boutique
-      - uses: debianmaster/actions-k3s@master
+        uses: debianmaster/actions-k3s@master
         id: k3s
         with:
           version: 'latest'        
