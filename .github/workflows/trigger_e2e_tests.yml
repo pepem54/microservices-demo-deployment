@@ -65,6 +65,7 @@ jobs:
              export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
              echo $BOUTIQUE_FRONTEND_IP
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
-             wget $BOUTIQUE_FRONTEND_IP:8080 -t 1
+             #wget $BOUTIQUE_FRONTEND_IP:8080 -t 1
+             ping $TEST_ENDPOINT
              echo `cat index.html'
              npm run test
