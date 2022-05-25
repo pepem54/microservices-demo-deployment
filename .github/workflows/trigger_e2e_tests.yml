@@ -1,5 +1,5 @@
 ﻿
-name: Push config to deployment repo
+name: Execute e2e tests
 on:
   push:
     branches: [ master ]
