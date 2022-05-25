@@ -67,4 +67,4 @@ jobs:
              export TEST_ENDPOINT=$BOUTIQUE_FRONTEND_IP:8080
              #wget $BOUTIQUE_FRONTEND_IP:8080
              #echo `cat index.html'
-             #npm run test
+             npm run test
