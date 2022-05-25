@@ -1,0 +1,13 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+  name: sl-boutique-cartservice
+spec:
+  ports:
+    - name: sl-boutique-cartservice
+      port: 7070
+      targetPort: 7070
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: sl-boutique-cartservice
+  type: ClusterIP
