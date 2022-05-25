@@ -34,7 +34,7 @@ jobs:
       - name: Set up k3s
         uses: nolar/setup-k3d-k3s@v1
         with:
-          aws-access-key-id: ${{ secrets.GH_PAT }}
+          github-token: ${{ secrets.GH_PAT }}
           k3d-name: sl-boutique
       - name: Deploy services
         run: |
