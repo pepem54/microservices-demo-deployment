@@ -33,5 +33,7 @@ jobs:
           aws-access-key-id: ${{ secrets.GH_PAT }}
           k3d-name: sl-boutique
       - name: Deploy services
-        run: kubectl apply -R -f ./k3s/
+        run: |
+          kubectl apply -R -f ./k3s/
+          echo `kubectl get services`
     
