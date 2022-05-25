@@ -9,8 +9,8 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-  GITHUB_USERNAME: ${{ secrets.GH_USER_NAME }}
-  GITHUB_USER_EMAIL: ${{ secrets.GH_USER_EMAIL }}
+  #GITHUB_USERNAME: ${{ secrets.GH_USER_NAME }}
+  #GITHUB_USER_EMAIL: ${{ secrets.GH_USER_EMAIL }}
   
 jobs:
   trigger_e2e_tests:
@@ -43,8 +43,8 @@ jobs:
           
       - name: Deployment repo fetch     
         run: |             
-             git config --global user.name $GITHUB_USERNAME
-             git config --global user.email $GITHUB_USER_EMAIL
+             #git config --global user.name $GITHUB_USERNAME
+             #git config --global user.email $GITHUB_USER_EMAIL
              export GITHUB_TOKEN=
              echo $GITHUB_TOKEN >> token.txt
              gh auth login --with-token < token.txt
