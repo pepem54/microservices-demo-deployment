@@ -53,6 +53,7 @@ jobs:
              cd tests             
              #npm install
              #echo `kubectl get svc sl-boutique-frontend -o json`
+             sleep 30s
              echo `kubectl get services`
              export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .spec.clusterIP`         
              echo $BOUTIQUE_FRONTEND_IP
