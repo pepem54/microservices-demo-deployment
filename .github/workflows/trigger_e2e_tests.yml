@@ -52,4 +52,4 @@ jobs:
              git remote set-url origin https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git
              cd tests             
              npm install
-             export TEST_ENDPOINT=http://localhost:3030
+             export TEST_ENDPOINT=http://sl-boutique-frontend:8080
