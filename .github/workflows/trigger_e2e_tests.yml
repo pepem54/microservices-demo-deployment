@@ -32,10 +32,14 @@ jobs:
 #          aws-region: eu-west-1
   
       - name: Set up k3s
-        uses: nolar/setup-k3d-k3s@v1
+        #uses: nolar/setup-k3d-k3s@v1
+        #with:
+        #  github-token: ${{ secrets.GH_PAT }}
+        #  k3d-name: sl-boutique
+      - uses: debianmaster/actions-k3s@master
+        id: k3s
         with:
-          github-token: ${{ secrets.GH_PAT }}
-          k3d-name: sl-boutique
+          version: 'latest'        
       - name: Deploy services
         run: |
           kubectl apply -R -f ./k3s/
@@ -59,7 +63,7 @@ jobs:
              #  ((counter++))
              #done
 
-             sleep 180s
+             sleep 30s
              #echo `kubectl get svc sl-boutique-frontend -o json`
              #echo `kubectl get services`
              export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
