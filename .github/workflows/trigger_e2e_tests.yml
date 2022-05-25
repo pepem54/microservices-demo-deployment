@@ -55,7 +55,7 @@ jobs:
              git clone https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git tests
              git remote set-url origin https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git
              cd tests             
-             npm install
+             #npm install
              
              #while [ $counter -le 10 ]
              #do
@@ -63,7 +63,7 @@ jobs:
              #  ((counter++))
              #done
 
-             sleep 30s
+             sleep 60s
              #echo `kubectl get svc sl-boutique-frontend -o json`
              #echo `kubectl get services`
              export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
@@ -75,4 +75,4 @@ jobs:
              ping $BOUTIQUE_FRONTEND_IP -c 5
              wget $TEST_ENDPOINT -t 1             
              #echo `cat index.html'
-             npm run test
+             #npm run test
