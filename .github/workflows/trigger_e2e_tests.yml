@@ -66,7 +66,8 @@ jobs:
              echo $BOUTIQUE_FRONTEND_IP
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
              echo $TEST_ENDPOINT
+             kubectl get svc
              #ping $BOUTIQUE_FRONTEND_IP
-             wget $TEST_ENDPOINT -t 1             
-             echo `cat index.html'
-             npm run test
+             #wget $TEST_ENDPOINT -t 1             
+             #echo `cat index.html'
+             #npm run test
