@@ -67,6 +67,7 @@ jobs:
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
              echo $TEST_ENDPOINT
              kubectl get svc
+             kubectl get pods
              ping $BOUTIQUE_FRONTEND_IP -c 5
              wget $TEST_ENDPOINT -t 1             
              #echo `cat index.html'
