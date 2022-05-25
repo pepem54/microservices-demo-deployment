@@ -5,9 +5,13 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+  GITHUB_USERNAME: ${{ env.GH_USER_NAME }}
+  GITHUB_USER_EMAIL: ${{ env.GH_USER_EMAIL }}
+  
 jobs:
   trigger_e2e_tests:
     runs-on: ubuntu-latest
@@ -37,18 +41,14 @@ jobs:
           kubectl apply -R -f ./k3s/
           #echo `kubectl get services`
           
-      - name: Deployment repo fetch
-        env:
-          GITHUB_TOKEN: ${env.GH_PAT}
-          GITHUB_USERNAME: ${env.GH_USER_NAME}
-          GITHUB_USER_EMAIL: ${env.GH_USER_EMAIL}      
+      - name: Deployment repo fetch     
         run: |             
-             git config --global user.name ${GITHUB_USERNAME}
-             git config --global user.email ${GITHUB_USER_EMAIL}
+             git config --global user.name $GITHUB_USERNAME
+             git config --global user.email $GITHUB_USER_EMAIL
              export GITHUB_TOKEN=
-             echo ${GITHUB_TOKEN} >> token.txt
+             echo $GITHUB_TOKEN >> token.txt
              gh auth login --with-token < token.txt
-             git clone https://${GITHUB_TOKEN}@github.com/Sealights/microservices-demo-tests.git tests
-             git remote set-url origin https://${GITHUB_TOKEN}@github.com/Sealights/microservices-demo-tests.git
+             git clone https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git tests
+             git remote set-url origin https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git
              cd tests
              echo `ls`
