@@ -48,7 +48,7 @@ jobs:
       - name: Test ECR        
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: microservices-demo-checkoutservice
+          ECR_REPOSITORY: microservices-demo-adservice
           IMAGE_TAG: latest
         run: |
           echo $ECR_REGISTRY
