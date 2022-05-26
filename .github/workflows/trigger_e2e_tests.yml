@@ -43,13 +43,14 @@ jobs:
         uses: debianmaster/actions-k3s@master
         id: k3s
         with:
-          version: 'latest'        
+          version: 'latest' 
+          
       - name: Deploy services
         run: |
           #curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           #unzip awscliv2.zip
           #sudo ./aws/install
-          #aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 159616352881.dkr.ecr.eu-west-1.amazonaws.com
+          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 159616352881.dkr.ecr.eu-west-1.amazonaws.com
           #kubectl apply -R -f ./k3s/
           kubectl apply -f ./k3s/ad/manifest-pod.yaml
           #echo `kubectl get services`
