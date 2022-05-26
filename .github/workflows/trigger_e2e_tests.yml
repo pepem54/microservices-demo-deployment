@@ -51,11 +51,12 @@ jobs:
           #unzip awscliv2.zip
           #sudo ./aws/install
           aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 159616352881.dkr.ecr.eu-west-1.amazonaws.com
-          #kubectl apply -R -f ./k3s/
+          #kubectl apply -R -f ./k3s/          
           kubectl apply -f ./k3s/ad/manifest-pod.yaml
-          sleep 30s
-          #echo `kubectl get services`
+          sleep 15s
           kubectl get pods
+          kubectl describe pod sl-boutique-adservice
+          #echo `kubectl get services`          
           
       - name: Deployment repo fetch     
         run: |             
