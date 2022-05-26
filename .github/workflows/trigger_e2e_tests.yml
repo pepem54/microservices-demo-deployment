@@ -28,7 +28,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
-          
+        
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -45,16 +45,25 @@ jobs:
         with:
           version: 'latest' 
           
+      - name: Test ECR        
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: microservices-demo-checkoutservice
+          IMAGE_TAG: latest
+        run: |
+          echo $ECR_REGISTRY
+          echo $ECR_REPOSITORY
+          
       - name: Deploy services
         run: |
           #curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           #unzip awscliv2.zip
           #sudo ./aws/install
-          aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 159616352881.dkr.ecr.eu-west-1.amazonaws.com
-          #kubectl apply -R -f ./k3s/          
+          #aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 159616352881.dkr.ecr.eu-west-1.amazonaws.com
+          #kubectl apply -R -f ./k3s/                      
           kubectl apply -f ./k3s/ad/manifest-pod.yaml
           sleep 15s
-          kubectl get pods
+          #kubectl get pods
           kubectl describe pod sl-boutique-adservice
           #echo `kubectl get services`          
           
