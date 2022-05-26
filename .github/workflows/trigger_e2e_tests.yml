@@ -45,28 +45,24 @@ jobs:
         with:
           version: 'latest' 
           
-      - name: Test ECR        
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: microservices-demo-adservice
-          IMAGE_TAG: latest
-        run: |
-          echo $ECR_REGISTRY
-          echo $ECR_REPOSITORY
-          docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      #- name: Test ECR        
+      #  env:
+      #    ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #    ECR_REPOSITORY: microservices-demo-adservice
+      #    IMAGE_TAG: latest
+      #  run: |
+      #    echo $ECR_REGISTRY
+      #    echo $ECR_REPOSITORY
+      #    docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           
       - name: Deploy services
         run: |
-          #curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          #unzip awscliv2.zip
-          #sudo ./aws/install
           #aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 159616352881.dkr.ecr.eu-west-1.amazonaws.com
-          #kubectl apply -R -f ./k3s/                      
-          kubectl apply -f ./k3s/ad/manifest-pod.yaml
-          sleep 15s
+          kubectl apply -R -f ./k3s/                      
+          #kubectl apply -f ./k3s/ad/manifest-pod.yaml
+          #sleep 15s
           #kubectl get pods
-          kubectl describe pod sl-boutique-adservice
-          #echo `kubectl get services`          
+          #kubectl describe pod sl-boutique-adservice
           
       - name: Deployment repo fetch     
         run: |             
@@ -78,7 +74,7 @@ jobs:
              git clone https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git tests
              git remote set-url origin https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git
              cd tests             
-             #npm install
+             npm install
              
              #while [ $counter -le 10 ]
              #do
@@ -86,7 +82,7 @@ jobs:
              #  ((counter++))
              #done
 
-             sleep 30s
+             #sleep 30s
              #echo `kubectl get svc sl-boutique-frontend -o json`
              #echo `kubectl get services`
              export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
@@ -94,8 +90,8 @@ jobs:
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
              echo $TEST_ENDPOINT
              kubectl get svc
-             kubectl get pods
-             ping $BOUTIQUE_FRONTEND_IP -c 5
-             wget $TEST_ENDPOINT -t 1             
+             #kubectl get pods
+             #ping $BOUTIQUE_FRONTEND_IP -c 5
+             #wget $TEST_ENDPOINT -t 1             
              #echo `cat index.html'
-             #npm run test
+             npm run test
