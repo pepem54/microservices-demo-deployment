@@ -102,4 +102,4 @@ jobs:
              #echo `cat index.html'
              
              cd tests
-             npm run test --timeout 10000
+             npm run test
