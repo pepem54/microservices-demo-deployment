@@ -53,6 +53,7 @@ jobs:
           aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 159616352881.dkr.ecr.eu-west-1.amazonaws.com
           #kubectl apply -R -f ./k3s/
           kubectl apply -f ./k3s/ad/manifest-pod.yaml
+          sleep 30s
           #echo `kubectl get services`
           kubectl get pods
           
@@ -74,7 +75,7 @@ jobs:
              #  ((counter++))
              #done
 
-             sleep 60s
+             sleep 30s
              #echo `kubectl get svc sl-boutique-frontend -o json`
              #echo `kubectl get services`
              export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
