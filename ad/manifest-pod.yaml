@@ -13,6 +13,8 @@ spec:
       labels:
         app.kubernetes.io/name: sl-boutique-adservice
     spec:
+      imagePullSecrets:
+        - name: secret-registry
       containers:
         - image: 159616352881.dkr.ecr.eu-west-1.amazonaws.com/microservices-demo-adservice:latest
           name: adservice
