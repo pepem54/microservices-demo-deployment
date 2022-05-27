@@ -87,20 +87,17 @@ jobs:
              #  echo $counter
              #  ((counter++))
              #done
-
-             #echo `kubectl get svc sl-boutique-frontend -o json`
-             #echo `kubectl get services`
-             
              
              export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
              echo $BOUTIQUE_FRONTEND_IP
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
              echo $TEST_ENDPOINT
              kubectl get svc
-             #kubectl get pods
+             kubectl get pods
+             
              #ping $BOUTIQUE_FRONTEND_IP -c 5
-             #wget $TEST_ENDPOINT -t 1             
-             #echo `cat index.html'
+             wget $TEST_ENDPOINT -t 1     
+             echo `cat index.html'
              
              cd tests
              npm run test
