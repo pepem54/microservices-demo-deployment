@@ -13,6 +13,8 @@ spec:
       labels:
         app.kubernetes.io/name: sl-boutique-currencyservice
     spec:
+      imagePullSecrets:
+        - name: aws-secret    
       containers:
         - image: 159616352881.dkr.ecr.eu-west-1.amazonaws.com/microservices-demo-currencyservice:latest
           name: currency
