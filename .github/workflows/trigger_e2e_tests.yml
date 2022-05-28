@@ -67,6 +67,7 @@ jobs:
           
       - name: Waiting for pods to be ready
         run: |
+          chmod +rx wait-for-pods.sh
           ./wait-for-pods.sh
           
       - name: Deployment repo fetch     
