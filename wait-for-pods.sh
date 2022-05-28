@@ -10,10 +10,9 @@ do
 
   readarray -t statusesArray < <(echo "$statuses")
 
-
   if [ ${#statusesArray[@]} -eq 1 ]; then
     echo "One status"
-    if [ "$(statusesArray[0])" -eq "Running" ]; then
+    if [ ${statusesArray[0]}="Running" ]; then
      "Status: running"
       error=$((0))
       break
