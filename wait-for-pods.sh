@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 iterator=1
-maxIterations=10
+maxIterations=6
 error=1
 
 while [ $iterator -le $maxIterations ] 
@@ -23,7 +23,7 @@ do
   echo "Sleeping...$iterator"
 
   iterator=$((iterator+1))
-  sleep 1
+  sleep 10
 done
 
 if [ $error -ne 0 ]; then
