@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 iterator=1
-maxIterations=6
+maxIterations=$1
 error=1
 
 while [ $iterator -le $maxIterations ] 
