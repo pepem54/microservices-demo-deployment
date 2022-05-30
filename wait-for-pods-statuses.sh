@@ -16,16 +16,11 @@ do
   kubectl get pods
   #echo "Pods-json:"
   #cat k3s-statuses.json
-  echo "Array:"
-  echo "${statusesArray[@]}"
+  echo "Array: ${statusesArray[@]}"
   #echo "Array count:"
   #echo "${#statusesArray[@]}"
-  #echo "First element:"
-  #echo "${statusesArray[0]}"
 
   if [ ${#statusesArray[@]} -eq 1 ]; then
-    echo "X:"
-    echo "${statusesArray[0]}"
     if [ "${statusesArray[0]}" = "running" ]; then
       echo "Waiting finished"
       error=$((0))
