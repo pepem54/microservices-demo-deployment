@@ -125,9 +125,9 @@ jobs:
              kubectl get svc
              kubectl get pods
              
-             #ping $BOUTIQUE_FRONTEND_IP -c 5
-             wget $TEST_ENDPOINT -t 1     
-             echo `cat index.html'
+             ping $BOUTIQUE_FRONTEND_IP -c 5
+             #wget $TEST_ENDPOINT -t 1     
+             #echo `cat index.html'
              
              cd tests
              npm run test
