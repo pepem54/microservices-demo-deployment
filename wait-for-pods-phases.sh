@@ -6,12 +6,12 @@ error=1
 
 while [ $iterator -le $maxIterations ] 
 do
-  phases=`kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.phase}" | tr -s '[[:space:]]' '\n' | sort | uniq` 
+  phases=`kubectl get pods --namespace=default -o jsonpath="{.items[*].status.phase}" | tr -s '[[:space:]]' '\n' | sort | uniq` 
   kubectl get pods --all-namespaces -o json
   readarray -t phasesArray < <(echo "$phases")
+  
   kubectl get pods
   echo "Array: ${phasesArray[@]}"
-  echo "$phases"
 
   if [ ${#phasesArray[@]} -eq 1 ]; then         
     if [ "${phasesArray[0]}" = "Running" ]; then
