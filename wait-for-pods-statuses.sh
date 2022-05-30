@@ -26,14 +26,14 @@ do
   if [ ${#statusesArray[@]} -eq 1 ]; then
     echo "X:"
     echo "${statusesArray[0]}"
-    if [ "${statusesArray[0]}" = "Running" ]; then
+    if [ "${statusesArray[0]}" = "running" ]; then
       echo "Waiting finished"
       error=$((0))
       break
     fi
   fi
 
-  echo "Sleeping...$iterator of $maxIterations"
+  echo "Retrying...$iterator of $maxIterations"
 
   iterator=$((iterator+1))
   sleep 10
