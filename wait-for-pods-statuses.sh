@@ -22,7 +22,8 @@ do
   #echo "${statusesArray[0]}"
 
   if [ ${#statusesArray[@]} -eq 1 ]; then
-    #echo "One status"
+    echo "X:"
+    echo "${statusesArray[0]}"
     if [ "${statusesArray[0]}" = "Running" ]; then
       echo "Waiting finished"
       error=$((0))
@@ -30,7 +31,7 @@ do
     fi
   fi
 
-  echo "Sleeping...$iterator of maxIterations"
+  echo "Sleeping...$iterator of $maxIterations"
 
   iterator=$((iterator+1))
   sleep 10
