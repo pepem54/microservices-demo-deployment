@@ -98,13 +98,8 @@ jobs:
                
       - name: Run e2e tests     
         run: |                           
-             #export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
-             #echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
              echo "Test entry point: $TEST_ENDPOINT"
-                          
-             #wget $TEST_ENDPOINT -t 1     
-             #echo `cat index.html'
              
              cd tests
              npm run test
