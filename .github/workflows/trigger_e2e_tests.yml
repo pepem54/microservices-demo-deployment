@@ -70,29 +70,8 @@ jobs:
              
       - name: Wait for external IPs
         run: |           
-              iterator=1
-
-              while [ $iterator -le $((K3S_MAX_RETRY_COUNT)) ] 
-              do
-               loadBnalancerStatus=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer`
-
-               if [ ! "$loadBnalancerStatus" == "{}" ]; then
-                 echo "$loadBnalancerStatus" > loadBnalancerStatus.json
-                 export BOUTIQUE_FRONTEND_IP=`jq -r .ingress[].ip loadBnalancerStatus.json`
-                 echo "$BOUTIQUE_FRONTEND_IP" > test-entrypoint.txt
-                 
-                 if [ ! -z "$BOUTIQUE_FRONTEND_IP" ]; then
-                   break
-                 fi               
-               fi
-
-               echo "Retrying... $iterator of $maxIterations"
-               iterator=$((iterator+1))
-               sleep $((SLEEP_DURATION))
-              done
-
-              echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
-              #ping $BOUTIQUE_FRONTEND_IP -c 5
+            chmod +rx ./k3s-deployment/wait-for-external-ip.sh        
+            ./k3s-deployment/wait-for-external-ip.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
                
       - name: Test Frontend availability
         run: |
