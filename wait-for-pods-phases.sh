@@ -15,7 +15,7 @@ do
   if [ ${#phasesArray[@]} -eq 1 ]; then 
     #echo "${phasesArray[0]}"
     
-    if [ "${phasesArray[0]}" = "running" ]; then
+    if [ "${phasesArray[0]}" = "Running" ]; then
       echo "Waiting finished"
       error=$((0))
       break
