@@ -9,8 +9,8 @@ do
   phases=`kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.phase}" | tr -s '[[:space:]]' '\n' | sort | uniq`  
   readarray -t phasesArray < <(echo "$phases")
   kubectl get pods
-  echo "Array: ${phasesArray[@]}" 
-  cat k3s-statuses.json
+  echo "Array: ${phasesArray[@]}"
+  echo "$phases"
 
   if [ ${#phasesArray[@]} -eq 1 ]; then 
     #echo "${phasesArray[0]}"
