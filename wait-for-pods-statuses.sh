@@ -19,6 +19,8 @@ do
   echo "Array: ${statusesArray[@]}"
   #echo "Array count:"
   #echo "${#statusesArray[@]}"
+  
+  cat k3s-statuses.json
 
   if [ ${#statusesArray[@]} -eq 1 ]; then
     if [ "${statusesArray[0]}" = "running" ]; then
