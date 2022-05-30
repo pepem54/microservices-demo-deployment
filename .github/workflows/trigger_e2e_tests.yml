@@ -11,6 +11,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GH_PAT }}
   K3S_MAX_RETRY_COUNT: ${{ secrets.K3S_MAX_RETRY_COUNT }}
   SLEEP_DURATION: 10
+  TEST_ENTRYPOINT: ""
   
 jobs:
   trigger_e2e_tests:
@@ -92,13 +93,16 @@ jobs:
 
               echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
               ping $BOUTIQUE_FRONTEND_IP -c 5
+              
+              echo "$BOUTIQUE_FRONTEND_IP" >> $TEST_ENTRYPOINT
                
 #      - name: Test Frontend availability
 #        run: |
 #             ping $BOUTIQUE_FRONTEND_IP -c 5
                
       - name: Run e2e tests     
-        run: |                           
+        run: |                   
+             echo "TEST: $TEST_ENTRYPOINT"
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
              echo "Test entry point: $TEST_ENDPOINT"
              
