@@ -6,10 +6,10 @@ error=1
 
 while [ $iterator -le $maxIterations ] 
 do
-  statuses=`kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.phase}" | tr -s '[[:space:]]' '\n' | sort | uniq`
+  statuses=`kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.containerStatuses[0].state}" | tr -s '[[:space:]]' '\n' | jq -r 'keys[]' jsonfile.json | uniq`
   kubectl get pods
   
-  readarray -t statusesArray < <(echo "$statuses")
+  readarray -t statusesArray < <(echo "$statuses")  
 
   if [ ${#statusesArray[@]} -eq 1 ]; then
     echo "One status"
