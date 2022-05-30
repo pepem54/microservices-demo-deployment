@@ -10,8 +10,7 @@ on:
 env:
   GITHUB_TOKEN: ${{ secrets.GH_PAT }}
   K3S_MAX_RETRY_COUNT: ${{ secrets.K3S_MAX_RETRY_COUNT }}
-  #GITHUB_USERNAME: ${{ secrets.GH_USER_NAME }}
-  #GITHUB_USER_EMAIL: ${{ secrets.GH_USER_EMAIL }}
+  SLEEP_DURATION: 10
   
 jobs:
   trigger_e2e_tests:
@@ -37,24 +36,10 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Set up k3s
-        #uses: nolar/setup-k3d-k3s@v1
-        #with:
-        #  github-token: ${{ secrets.GH_PAT }}
-        #  k3d-name: sl-boutique
         uses: debianmaster/actions-k3s@master
         id: k3s
         with:
           version: 'latest' 
-          
-      #- name: Test ECR        
-      #  env:
-      #    ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #    ECR_REPOSITORY: microservices-demo-adservice
-      #    IMAGE_TAG: latest
-      #  run: |
-      #    echo $ECR_REGISTRY
-      #    echo $ECR_REPOSITORY
-      #    docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           
       - name: Deploy services
         run: |
@@ -64,20 +49,17 @@ jobs:
       - name: Waiting for fetching containers
         run: |
           chmod +rx wait-for-pods-statuses.sh          
-          ./wait-for-pods-statuses.sh $K3S_MAX_RETRY_COUNT 10
+          ./wait-for-pods-statuses.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
           
       - name: Waiting for pods to be ready
         run: |
           chmod +rx wait-for-pods-phases.sh          
-          ./wait-for-pods-phases.sh $K3S_MAX_RETRY_COUNT 10
+          ./wait-for-pods-phases.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
           
       - name: Deployment repo fetch     
         run: |             
-             #git config --global user.name $GITHUB_USERNAME
-             #git config --global user.email $GITHUB_USER_EMAIL
              export GITHUB_TOKEN=
              echo $GITHUB_TOKEN >> token.txt
-             #gh auth login --with-token < token.txt
              git clone https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git tests
              git remote set-url origin https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git
              
@@ -104,26 +86,18 @@ jobs:
                fi
                         
                iterator=$((iterator+1))
-               sleep 10
+               sleep $((SLEEP_DURATION))
              done
              
              echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
              #echo "$BOUTIQUE_FRONTEND_IP"
                         
       - name: Run e2e tests     
-        run: |               
-             #while [ $counter -le 10 ]
-             #do
-             #  echo $counter
-             #  ((counter++))
-             #done
-             
+        run: |                           
              export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
-             echo $BOUTIQUE_FRONTEND_IP
+             echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
-             echo $TEST_ENDPOINT
-             kubectl get svc
-             kubectl get pods
+             echo "Test entry point: $TEST_ENDPOINT"
              
              ping $BOUTIQUE_FRONTEND_IP -c 5
              #wget $TEST_ENDPOINT -t 1     
