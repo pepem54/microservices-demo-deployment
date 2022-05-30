@@ -9,12 +9,13 @@ do
   phases=`kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.phase}" | tr -s '[[:space:]]' '\n' | sort | uniq`  
   readarray -t phasesArray < <(echo "$phases")
   kubectl get pods
+  echo "${phasesArray[@]}" 
 
   if [ ${#phasesArray[@]} -eq 1 ]; then 
     echo "X:"
     echo "${phasesArray[0]}"
     
-    if [ "${phasesArray[0]}" = "Running" ]; then
+    if [ "${phasesArray[0]}" = "running" ]; then
       echo "Phase: running"
       error=$((0))
       break
