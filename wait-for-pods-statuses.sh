@@ -3,7 +3,7 @@
 iterator=1
 maxIterations=10
 error=1
-statusToIgnore="Terminated"
+statusToIgnore="terminated"
 
 while [ $iterator -le $maxIterations ] 
 do
