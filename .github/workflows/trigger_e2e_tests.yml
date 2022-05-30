@@ -11,7 +11,6 @@ env:
   GITHUB_TOKEN: ${{ secrets.GH_PAT }}
   K3S_MAX_RETRY_COUNT: ${{ secrets.K3S_MAX_RETRY_COUNT }}
   SLEEP_DURATION: 10
-#  TEST_ENTRYPOINT: ""
   
 jobs:
   trigger_e2e_tests:
@@ -52,7 +51,7 @@ jobs:
           chmod +rx ./k3s-deployment/wait-for-pods-statuses.sh          
           ./k3s-deployment/wait-for-pods-statuses.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
           
-      - name: Wait for pods to be ready
+      - name: Wait for pods
         run: |
           chmod +rx ./k3s-deployment/wait-for-pods-phases.sh          
           ./k3s-deployment/wait-for-pods-phases.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
@@ -80,7 +79,8 @@ jobs:
                if [ ! "$loadBnalancerStatus" == "{}" ]; then
                  echo "$loadBnalancerStatus" > loadBnalancerStatus.json
                  export BOUTIQUE_FRONTEND_IP=`jq -r .ingress[].ip loadBnalancerStatus.json`
-
+                 echo $BOUTIQUE_FRONTEND_IP > test-entrypoint.txt
+                 
                  if [ ! -z "$BOUTIQUE_FRONTEND_IP" ]; then
                    break
                  fi               
@@ -91,18 +91,19 @@ jobs:
                sleep $((SLEEP_DURATION))
               done
 
-              echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
-              ping $BOUTIQUE_FRONTEND_IP -c 5
-              
-              echo "$BOUTIQUE_FRONTEND_IP" >> $TEST_ENTRYPOINT
+              #echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
+              #ping $BOUTIQUE_FRONTEND_IP -c 5
                
-#      - name: Test Frontend availability
-#        run: |
-#             ping $BOUTIQUE_FRONTEND_IP -c 5
+      - name: Test Frontend availability
+        run: |
+             cat test-entrypoint.txt | export BOUTIQUE_FRONTEND_IP
+             
+             ping $BOUTIQUE_FRONTEND_IP -c 5
                
       - name: Run e2e tests     
         run: |                   
-             echo "TEST: $TEST_ENTRYPOINT"
+             cat test-entrypoint.txt | export BOUTIQUE_FRONTEND_IP
+             echo "TEST: $BOUTIQUE_FRONTEND_IP"
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
              echo "Test entry point: $TEST_ENDPOINT"
              
