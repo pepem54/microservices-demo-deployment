@@ -9,8 +9,14 @@ do
   kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.containerStatuses[0].state}" | tr -s '[[:space:]]' '\n' > k3s-statuses.json
   statuses=`jq -r 'keys[]' k3s-statuses.json | uniq`
   
+  echo 'Pods:"
   kubectl get pods
+  echo 'Pods-json:"
   cat k3s-statuses.json
+  echo 'Array:'
+  echo ${statusesArray[@]}
+  echo 'Array count:'
+  echo ${#statusesArray[@]}
   
   readarray -t statusesArray < <(echo "$statuses")  
 
