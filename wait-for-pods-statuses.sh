@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 iterator=1
-maxIterations=6
+maxIterations=10
 error=1
 
 while [ $iterator -le $maxIterations ] 
@@ -10,27 +10,27 @@ do
   statuses=`jq -r 'keys[]' k3s-statuses.json | uniq`
   readarray -t statusesArray < <(echo "$statuses")  
     
-  echo "Pods:"
+  #echo "Pods:"
   kubectl get pods
-  echo "Pods-json:"
-  cat k3s-statuses.json
-  echo "Array:"
-  echo "${statusesArray[@]}"
-  echo "Array count:"
-  echo "${#statusesArray[@]}"
-  echo "First element:"
-  echo "${statusesArray[0]}"
+  #echo "Pods-json:"
+  #cat k3s-statuses.json
+  #echo "Array:"
+  #echo "${statusesArray[@]}"
+  #echo "Array count:"
+  #echo "${#statusesArray[@]}"
+  #echo "First element:"
+  #echo "${statusesArray[0]}"
 
   if [ ${#statusesArray[@]} -eq 1 ]; then
-    echo "One status"
+    #echo "One status"
     if [ "${statusesArray[0]}" = "Running" ]; then
-      echo "Status: running"
+      echo "Waiting finished"
       error=$((0))
       break
     fi
   fi
 
-  echo "Sleeping...$iterator"
+  echo "Sleeping...$iterator of maxIterations"
 
   iterator=$((iterator+1))
   sleep 10
