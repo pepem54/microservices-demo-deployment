@@ -96,9 +96,9 @@ jobs:
                
       - name: Test Frontend availability
         run: |
-             cat test-entrypoint.txt | export BOUTIQUE_FRONTEND_IP
+             cat test-entrypoint.txt | export BOUTIQUE_FRONTEND_IP_2
              
-             ping $BOUTIQUE_FRONTEND_IP -c 5
+             ping $BOUTIQUE_FRONTEND_IP_2 -c 5
                
       - name: Run e2e tests     
         run: |                   
