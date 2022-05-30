@@ -23,3 +23,4 @@ do
 done
 
 echo "IP: $BOUTIQUE_FRONTEND_IP"
+echo "$BOUTIQUE_FRONTEND_IP"
