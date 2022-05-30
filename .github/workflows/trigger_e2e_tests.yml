@@ -79,7 +79,7 @@ jobs:
                if [ ! "$loadBnalancerStatus" == "{}" ]; then
                  echo "$loadBnalancerStatus" > loadBnalancerStatus.json
                  export BOUTIQUE_FRONTEND_IP=`jq -r .ingress[].ip loadBnalancerStatus.json`
-                 echo $BOUTIQUE_FRONTEND_IP > test-entrypoint.txt
+                 echo "$BOUTIQUE_FRONTEND_IP" > test-entrypoint.txt
                  
                  if [ ! -z "$BOUTIQUE_FRONTEND_IP" ]; then
                    break
@@ -91,18 +91,17 @@ jobs:
                sleep $((SLEEP_DURATION))
               done
 
-              #echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
+              echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
               #ping $BOUTIQUE_FRONTEND_IP -c 5
                
       - name: Test Frontend availability
         run: |
-             export BOUTIQUE_FRONTEND_IP_2=$(cat test-entrypoint.txt)             
-             
-             ping $BOUTIQUE_FRONTEND_IP_2 -c 5
+             export BOUTIQUE_FRONTEND_IP=$(cat test-entrypoint.txt)             
+             ping $BOUTIQUE_FRONTEND_IP -c 5
                
       - name: Run e2e tests     
-        run: |                   
-             cat test-entrypoint.txt | export BOUTIQUE_FRONTEND_IP
+        run: |
+             export BOUTIQUE_FRONTEND_IP=$(cat test-entrypoint.txt)                          
              echo "TEST: $BOUTIQUE_FRONTEND_IP"
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
              echo "Test entry point: $TEST_ENDPOINT"
