@@ -10,6 +10,7 @@ do
   readarray -t phasesArray < <(echo "$phases")
   kubectl get pods
   echo "Array: ${phasesArray[@]}" 
+  cat k3s-statuses.json
 
   if [ ${#phasesArray[@]} -eq 1 ]; then 
     #echo "${phasesArray[0]}"
