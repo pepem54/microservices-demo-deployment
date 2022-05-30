@@ -7,7 +7,6 @@ error=1
 while [ $iterator -le $maxIterations ] 
 do
   phases=`kubectl get pods --namespace=default -o jsonpath="{.items[*].status.phase}" | tr -s '[[:space:]]' '\n' | sort | uniq` 
-  kubectl get pods --all-namespaces -o json
   readarray -t phasesArray < <(echo "$phases")
   
   kubectl get pods
