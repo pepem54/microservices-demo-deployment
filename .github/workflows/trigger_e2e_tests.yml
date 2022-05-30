@@ -56,7 +56,7 @@ jobs:
           chmod +rx ./k3s-deployment/wait-for-pods-phases.sh          
           ./k3s-deployment/wait-for-pods-phases.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
           
-      - name: Deployment repo fetch     
+      - name: Fetch deployment repo
         run: |             
              export GITHUB_TOKEN=
              echo $GITHUB_TOKEN >> token.txt
