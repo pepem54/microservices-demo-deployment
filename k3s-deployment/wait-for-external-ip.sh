@@ -11,6 +11,7 @@ do
  if [ ! "$loadBnalancerStatus" == "{}" ]; then
    echo "$loadBnalancerStatus" > loadBnalancerStatus.json
    export BOUTIQUE_FRONTEND_IP=`jq -r .ingress[].ip loadBnalancerStatus.json`
+   echo "$BOUTIQUE_FRONTEND_IP" > test-entrypoint.txt
 
    if [ ! -z "$BOUTIQUE_FRONTEND_IP" ]; then
      break
@@ -22,5 +23,4 @@ do
  sleep $((sleepTime))
 done
 
-echo "IP: $BOUTIQUE_FRONTEND_IP"
-echo "$BOUTIQUE_FRONTEND_IP"
+echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
