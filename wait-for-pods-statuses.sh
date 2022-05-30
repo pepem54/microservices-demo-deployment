@@ -6,7 +6,7 @@ sleepTime=$2
 error=1
 statusToIgnore="terminated"
 
-while [ $iterator -le $maxIterations ] 
+while [ $iterator -le $((maxIterations)) ] 
 do
   kubectl get pods --namespace=default -o jsonpath="{.items[*].status.containerStatuses[0].state}" | tr -s '[[:space:]]' '\n' > k3s-statuses.json
   statuses=`jq -r 'keys[]' k3s-statuses.json | sort | uniq`
