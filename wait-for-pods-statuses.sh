@@ -32,7 +32,7 @@ do
   echo "Retrying...$iterator of $maxIterations"
 
   iterator=$((iterator+1))
-  sleep $sleepTime
+  sleep $((sleepTime))
 done
 
 if [ $error -ne 0 ]; then
