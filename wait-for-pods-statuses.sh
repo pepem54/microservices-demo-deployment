@@ -1,7 +1,8 @@
 #!/bin/bash 
 
 iterator=1
-maxIterations=10
+maxIterations=$1
+sleepTime=$2
 error=1
 statusToIgnore="terminated"
 
@@ -31,7 +32,7 @@ do
   echo "Retrying...$iterator of $maxIterations"
 
   iterator=$((iterator+1))
-  sleep 10
+  sleep $sleepTime
 done
 
 if [ $error -ne 0 ]; then
