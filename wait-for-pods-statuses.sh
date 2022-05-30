@@ -23,7 +23,7 @@ do
 
   if [ ${#statusesArray[@]} -eq 1 ]; then
     echo "One status"
-    if [ ${statusesArray[0]}="Running" ]; then
+    if [ "${statusesArray[0]}" = "Running" ]; then
       echo "Status: running"
       error=$((0))
       break
