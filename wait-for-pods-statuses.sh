@@ -18,6 +18,8 @@ do
   echo "${statusesArray[@]}"
   echo "Array count:"
   echo "${#statusesArray[@]}"
+  echo "First element:"
+  echo "${statusesArray[0]}"
 
   if [ ${#statusesArray[@]} -eq 1 ]; then
     echo "One status"
