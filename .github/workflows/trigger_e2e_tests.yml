@@ -48,13 +48,13 @@ jobs:
           
       - name: Waiting for fetching containers
         run: |
-          chmod +rx wait-for-pods-statuses.sh          
-          ./wait-for-pods-statuses.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
+          chmod +rx ./k3s-deployment/wait-for-pods-statuses.sh          
+          ./k3s-deployment/wait-for-pods-statuses.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
           
       - name: Waiting for pods to be ready
         run: |
-          chmod +rx wait-for-pods-phases.sh          
-          ./wait-for-pods-phases.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
+          chmod +rx ./k3s-deployment/wait-for-pods-phases.sh          
+          ./k3s-deployment/wait-for-pods-phases.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
           
       - name: Deployment repo fetch     
         run: |             
