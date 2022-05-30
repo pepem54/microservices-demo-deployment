@@ -11,6 +11,9 @@ do
   kubectl get pods
 
   if [ ${#phasesArray[@]} -eq 1 ]; then 
+    echo "X:"
+    echo "${phasesArray[0]}"
+    
     if [ "${phasesArray[0]}" = "Running" ]; then
       echo "Phase: running"
       error=$((0))
