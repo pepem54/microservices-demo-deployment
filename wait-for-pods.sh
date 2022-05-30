@@ -19,6 +19,7 @@ do
     fi
   fi
 
+  kubectl get pods
   echo "Sleeping...$iterator"
 
   iterator=$((iterator+1))
