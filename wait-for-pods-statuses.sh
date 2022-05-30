@@ -8,7 +8,8 @@ while [ $iterator -le $maxIterations ]
 do
   kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.containerStatuses[0].state}" | tr -s '[[:space:]]' '\n' > k3s-statuses.json
   statuses=`jq -r 'keys[]' k3s-statuses.json | uniq`
-  
+  readarray -t statusesArray < <(echo "$statuses")  
+    
   echo "Pods:"
   kubectl get pods
   echo "Pods-json:"
@@ -17,8 +18,6 @@ do
   echo "${statusesArray[@]}"
   echo "Array count:"
   echo "${#statusesArray[@]}"
-  
-  readarray -t statusesArray < <(echo "$statuses")  
 
   if [ ${#statusesArray[@]} -eq 1 ]; then
     echo "One status"
