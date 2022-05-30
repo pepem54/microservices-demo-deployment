@@ -87,16 +87,22 @@ jobs:
              npm install
              
       - name: Waiting for external IPs
-        run: |
-             export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
+        run: |             
              iterator = 1
              
              while [ $iterator -le $K3S_MAX_RETRY_COUNT ] 
              do
-               if [ ! -z "$BOUTIQUE_FRONTEND_IP" ]                 
-                 break
+               loadBnalancerStatus=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer`
+                             
+               if [ ! "$loadBnalancerStatus" == "{}" ]; then
+                 echo "$loadBnalancerStatus" > loadBnalancerStatus.json
+                 export BOUTIQUE_FRONTEND_IP=`jq -r .ingress[].ip loadBnalancerStatus.json`
+                 
+                 if [ ! -z "$BOUTIQUE_FRONTEND_IP" ]                 
+                   break
+                 fi               
                fi
-               
+                        
                iterator=$((iterator+1))
                sleep 10
              done
