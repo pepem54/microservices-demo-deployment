@@ -71,7 +71,7 @@ jobs:
       - name: Wait for external IPs
         run: |           
              chmod +rx ./k3s-deployment/wait-for-external-ip.sh          
-             ./k3s-deployment/wait-for-external-ip.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
+             export BOUTIQUE_FRONTEND_IP=./k3s-deployment/wait-for-external-ip.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION | tail -n 1
                                     
              echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
                
