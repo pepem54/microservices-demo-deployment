@@ -91,10 +91,11 @@ jobs:
               done
 
               echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
+              ping $BOUTIQUE_FRONTEND_IP -c 5
                
-      - name: Test Frontend availability
-        run: |
-             ping $BOUTIQUE_FRONTEND_IP -c 5
+#      - name: Test Frontend availability
+#        run: |
+#             ping $BOUTIQUE_FRONTEND_IP -c 5
                
       - name: Run e2e tests     
         run: |                           
