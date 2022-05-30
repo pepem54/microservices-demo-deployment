@@ -7,7 +7,8 @@ error=1
 while [ $iterator -le $maxIterations ] 
 do
   statuses=`kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.phase}" | tr -s '[[:space:]]' '\n' | sort | uniq`
-
+  kubectl get pods
+  
   readarray -t statusesArray < <(echo "$statuses")
 
   if [ ${#statusesArray[@]} -eq 1 ]; then
@@ -19,7 +20,6 @@ do
     fi
   fi
 
-  kubectl get pods
   echo "Sleeping...$iterator"
 
   iterator=$((iterator+1))
