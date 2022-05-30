@@ -98,7 +98,7 @@ jobs:
                  echo "$loadBnalancerStatus" > loadBnalancerStatus.json
                  export BOUTIQUE_FRONTEND_IP=`jq -r .ingress[].ip loadBnalancerStatus.json`
                  
-                 if [ ! -z "$BOUTIQUE_FRONTEND_IP" ]                 
+                 if [ ! -z "$BOUTIQUE_FRONTEND_IP" ]; then
                    break
                  fi               
                fi
