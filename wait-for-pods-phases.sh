@@ -2,6 +2,7 @@
 
 iterator=1
 maxIterations=$1
+sleepTime=$2
 error=1
 
 while [ $iterator -le $maxIterations ] 
@@ -23,7 +24,7 @@ do
   echo "Retrying...$iterator of $maxIterations"
 
   iterator=$((iterator+1))
-  sleep 10
+  sleep $sleepTime
 done
 
 if [ $error -ne 0 ]; then
