@@ -5,7 +5,7 @@ maxIterations=$1
 sleepTime=$2
 error=1
 
-while [ $iterator -le $maxIterations ] 
+while [ $iterator -le $((maxIterations)) ] 
 do
   phases=`kubectl get pods --namespace=default -o jsonpath="{.items[*].status.phase}" | tr -s '[[:space:]]' '\n' | sort | uniq` 
   readarray -t phasesArray < <(echo "$phases")
