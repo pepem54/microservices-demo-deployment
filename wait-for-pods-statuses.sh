@@ -14,8 +14,8 @@ do
   kubectl get pods
   #echo "Pods-json:"
   #cat k3s-statuses.json
-  #echo "Array:"
-  #echo "${statusesArray[@]}"
+  echo "Array:"
+  echo "${statusesArray[@]}"
   #echo "Array count:"
   #echo "${#statusesArray[@]}"
   #echo "First element:"
