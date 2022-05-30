@@ -46,12 +46,12 @@ jobs:
           kubectl create secret docker-registry aws-secret --docker-server=159616352881.dkr.ecr.eu-west-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password)          
           kubectl apply -R -f ./k3s/                      
           
-      - name: Waiting for fetching containers
+      - name: Wait for fetching containers
         run: |
           chmod +rx ./k3s-deployment/wait-for-pods-statuses.sh          
           ./k3s-deployment/wait-for-pods-statuses.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
           
-      - name: Waiting for pods to be ready
+      - name: Wait for pods to be ready
         run: |
           chmod +rx ./k3s-deployment/wait-for-pods-phases.sh          
           ./k3s-deployment/wait-for-pods-phases.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
@@ -68,21 +68,24 @@ jobs:
              cd tests             
              npm install
              
-      - name: Waiting for external IPs
+      - name: Wait for external IPs
         run: |           
              chmod +rx ./k3s-deployment/wait-for-external-ip.sh          
              ./k3s-deployment/wait-for-external-ip.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
                                     
              echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
-                        
+               
+      - name: Test Frontend availability
+        run: |
+             ping $BOUTIQUE_FRONTEND_IP -c 5
+               
       - name: Run e2e tests     
         run: |                           
-             export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
-             echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
+             #export BOUTIQUE_FRONTEND_IP=`kubectl get svc sl-boutique-frontend -o json| jq -r .status.loadBalancer.ingress[].ip`         
+             #echo "Frontend IP: $BOUTIQUE_FRONTEND_IP"
              export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
              echo "Test entry point: $TEST_ENDPOINT"
-             
-             ping $BOUTIQUE_FRONTEND_IP -c 5
+                          
              #wget $TEST_ENDPOINT -t 1     
              #echo `cat index.html'
              
