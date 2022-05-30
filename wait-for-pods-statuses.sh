@@ -6,9 +6,11 @@ error=1
 
 while [ $iterator -le $maxIterations ] 
 do
-  kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.containerStatuses[0].state}" | tr -s '[[:space:]]' '\n' > k3d-statuses.json
-  statuses=`jq -r 'keys[]' k3d-statuses.json | uniq`
+  kubectl get pods --all-namespaces -o jsonpath="{.items[*].status.containerStatuses[0].state}" | tr -s '[[:space:]]' '\n' > k3s-statuses.json
+  statuses=`jq -r 'keys[]' k3s-statuses.json | uniq`
+  
   kubectl get pods
+  cat k3s-statuses.json
   
   readarray -t statusesArray < <(echo "$statuses")  
 
