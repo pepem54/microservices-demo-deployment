@@ -11,7 +11,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GH_PAT }}
   K3S_MAX_RETRY_COUNT: ${{ secrets.K3S_MAX_RETRY_COUNT }}
   SLEEP_DURATION: 10
-  TEST_ENTRYPOINT: ""
+#  TEST_ENTRYPOINT: ""
   
 jobs:
   trigger_e2e_tests:
