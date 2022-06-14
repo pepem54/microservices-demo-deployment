@@ -25,8 +25,8 @@ jobs:
       - name: API TEST
         uses: satak/webrequest-action@master
         with:
-          url: https://dev-risk-management.dev.sealights.co/sl-api/v1/agent-apis/lab-ids/$INTEGRATION_LAB_ID/integration-build
+          url: https://dev-risk-management.dev.sealights.co/sl-api/v1/agent-apis/lab-ids/${{ env.INTEGRATION_LAB_ID }}/integration-build
           method: POST
           payload: '{"buildName": "$BUILD_ID"}'
-          headers: '{"Content-Type": "application/json", "Authentication": "Bearer $BEARER"}'       
+          headers: '{"Content-Type": "application/json", "Authentication": "Bearer ${{ env.BEARER }}"}'       
 
