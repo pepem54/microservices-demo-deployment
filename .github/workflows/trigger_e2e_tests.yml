@@ -18,7 +18,7 @@ jobs:
       - name: API TEST
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://dev-risk-management.dev.sealights.co/sl-api/v1/agent-apis/lab-ids/integ_master_813e_SLBoutique/integration-build'
+          url: 'https://dev-risk-management.dev.sealights.co/sl-api/v1/agent-apis/lab-ids/$INTEGRATION_LAB_ID/integration-build'
           method: 'POST'    
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.BEARER }}"}'          
           data: '{"buildName": "$BUILD_ID"}'        
