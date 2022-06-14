@@ -10,6 +10,7 @@ on:
 env:
   INTEGRATION_LAB_ID: "integ_master_813e_SLBoutique"
   BUILD_ID : build-${{ github.run_id }}-${{ github.run_attempt }}  
+  URL: "https://dev-risk-management.dev.sealights.co/sl-api/v1/agent-apis/lab-ids/$INTEGRATION_LAB_ID/integration-build"
   
 jobs:
   trigger_e2e_tests:
@@ -17,12 +18,13 @@ jobs:
     steps:
       - name: Setup
         run: |
-          echo "$INTEGRATION_LAB_ID"
+          echo "lab id: $INTEGRATION_LAB_ID"
+          echo "build id: $BUILD_ID"
           
       - name: API TEST
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "https://dev-risk-management.dev.sealights.co/sl-api/v1/agent-apis/lab-ids/$INTEGRATION_LAB_ID/integration-build"
+          url: "$URL"
           method: 'POST'    
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.BEARER }}"}'          
           data: '{"buildName": "$BUILD_ID"}'        
