@@ -25,10 +25,8 @@ jobs:
       - name: API TEST
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://dev-risk-management.dev.sealights.co/sl-api/v1/agent-apis/lab-ids/$INTEGRATION_LAB_ID/integration-build'
-          method: 'POST'
-          #customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.BEARER }}"}'
-          #customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL0RFVi1SaXNrLU1hbmFnZW1lbnQuYXV0aC5zZWFsaWdodHMuaW8vIiwiand0aWQiOiJERVYtUmlzay1NYW5hZ2VtZW50LGktMDY5YTllOWRiZGNhZjE4NTIsQVBJR1ctMzNlMTdmMWYtNTY5Yy00ZmIzLWI2ZWMtMjczNjYxODk5Y2E2LDE2NTUyMjE4MzM1MTEiLCJzdWJqZWN0IjoiU2VhTGlnaHRzQGFnZW50IiwiYXVkaWVuY2UiOlsiYWdlbnRzIl0sIngtc2wtcm9sZSI6ImFnZW50IiwieC1zbC1zZXJ2ZXIiOiJodHRwczovL2Rldi1yaXNrLW1hbmFnZW1lbnQuZGV2LnNlYWxpZ2h0cy5jby9hcGkiLCJzbF9pbXBlcl9zdWJqZWN0IjoiIiwiaWF0IjoxNjU1MjIxODMzfQ.e8MlyvG_NyGfNiT5wCKrYtvFSwJVNlGkjW2aHJLMe1qsR-azbs731Dxzb68Hx09Qk3Ruyqcdp8j4R503DKvi7b4Gk_twj3RO8XKelB8FWrY55hEbeG9EkZAAaFr8Kx7sxTOJBdlNqHIvlTdzsQ-xSVb9Tj7dWV3iG9BmGCnK676YXXEC5opsHqQ8QMkNFZOdm3w3cRDbGe0Pg-HKFQJ3R2S4h7pv3v-y-4g17O-tIim8xfCl5_GZbbJu3P6SBFleGSEGUxZwPef15oZsCYPBwn0rTcNTEs1ufx_Rf7RqX9Lyfs3lsHEME8WcoaMT0_JI_oZBapdm7BMwLDAH3AfS_m6PQbMjT05kcO9BNLDq0IoBrO9lwy07X2d_nBqSENMQFizvraVXogsYQmy4MDPagDLcqPM1a4EozIbIPNq8ZoGoYz1d1Sq1-MSGQXJ3MOw532DtXjjBm3ENKskOLzMeM6NhJ5HVBmzfe7M-Geg07QR5KDf9hzk0w_rAwslwoCBTU2Q0OFu10DWSsvyH0LHHP70dUKA6R6znPTDBvSNjYJWGL4FtcKtb57pSFAHPP5vLBf17FxkOz3pMG5FuiBu1aDlpgL8NDXblN3wjIJRJDUoyUEHJh0jWrfvi7snS8ZGiQJuS1bzhX4FrsSReKS3sJW2vI97Z6TjXfeAjwYM8ysQ"}'          
+          url: 'https://dev-risk-management.dev.sealights.co/sl-api/v1/agent-apis/lab-ids/integ_master_813e_SLBoutique/integration-build'
+          method: 'POST'    
           customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.BEARER }}"}'          
           data: '{"buildName": "$BUILD_ID"}'        
       
