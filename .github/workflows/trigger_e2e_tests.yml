@@ -15,6 +15,10 @@ jobs:
   trigger_e2e_tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup
+        run: |
+          echo "$INTEGRATION_LAB_ID"
+          
       - name: API TEST
         uses: fjogeleit/http-request-action@v1
         with:
