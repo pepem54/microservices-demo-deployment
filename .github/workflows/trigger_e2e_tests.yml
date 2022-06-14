@@ -21,6 +21,7 @@ jobs:
         run: |
           echo "lab id: $INTEGRATION_LAB_ID"
           echo "build id: $BUILD_ID"
+          echo "${{ env.BEARER }}"
           
       - name: API TEST
         uses: satak/webrequest-action@master
