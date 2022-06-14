@@ -8,9 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-  K3S_MAX_RETRY_COUNT: ${{ secrets.K3S_MAX_RETRY_COUNT }}
-  SLEEP_DURATION: 10
+  INTEGRATION_LAB_ID: "integ_master_813e_SLBoutique"
+  BUILD_ID : build-${{ github.run_id }}-${{ github.run_attempt }}  
   
 jobs:
   trigger_e2e_tests:
@@ -21,69 +20,15 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        
+          
+      - name: API TEST
+        uses: fjogeleit/http-request-action@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
-        
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-        
-      - uses: actions/checkout@v3
+          url: 'https://dev-risk-management.dev.sealights.co/sl-api/v1/agent-apis/lab-ids/$INTEGRATION_LAB_ID/integration-build'
+          method: 'POST'
+          #customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.BEARER }}"}'
+          #customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL0RFVi1SaXNrLU1hbmFnZW1lbnQuYXV0aC5zZWFsaWdodHMuaW8vIiwiand0aWQiOiJERVYtUmlzay1NYW5hZ2VtZW50LGktMDY5YTllOWRiZGNhZjE4NTIsQVBJR1ctMzNlMTdmMWYtNTY5Yy00ZmIzLWI2ZWMtMjczNjYxODk5Y2E2LDE2NTUyMjE4MzM1MTEiLCJzdWJqZWN0IjoiU2VhTGlnaHRzQGFnZW50IiwiYXVkaWVuY2UiOlsiYWdlbnRzIl0sIngtc2wtcm9sZSI6ImFnZW50IiwieC1zbC1zZXJ2ZXIiOiJodHRwczovL2Rldi1yaXNrLW1hbmFnZW1lbnQuZGV2LnNlYWxpZ2h0cy5jby9hcGkiLCJzbF9pbXBlcl9zdWJqZWN0IjoiIiwiaWF0IjoxNjU1MjIxODMzfQ.e8MlyvG_NyGfNiT5wCKrYtvFSwJVNlGkjW2aHJLMe1qsR-azbs731Dxzb68Hx09Qk3Ruyqcdp8j4R503DKvi7b4Gk_twj3RO8XKelB8FWrY55hEbeG9EkZAAaFr8Kx7sxTOJBdlNqHIvlTdzsQ-xSVb9Tj7dWV3iG9BmGCnK676YXXEC5opsHqQ8QMkNFZOdm3w3cRDbGe0Pg-HKFQJ3R2S4h7pv3v-y-4g17O-tIim8xfCl5_GZbbJu3P6SBFleGSEGUxZwPef15oZsCYPBwn0rTcNTEs1ufx_Rf7RqX9Lyfs3lsHEME8WcoaMT0_JI_oZBapdm7BMwLDAH3AfS_m6PQbMjT05kcO9BNLDq0IoBrO9lwy07X2d_nBqSENMQFizvraVXogsYQmy4MDPagDLcqPM1a4EozIbIPNq8ZoGoYz1d1Sq1-MSGQXJ3MOw532DtXjjBm3ENKskOLzMeM6NhJ5HVBmzfe7M-Geg07QR5KDf9hzk0w_rAwslwoCBTU2Q0OFu10DWSsvyH0LHHP70dUKA6R6znPTDBvSNjYJWGL4FtcKtb57pSFAHPP5vLBf17FxkOz3pMG5FuiBu1aDlpgL8NDXblN3wjIJRJDUoyUEHJh0jWrfvi7snS8ZGiQJuS1bzhX4FrsSReKS3sJW2vI97Z6TjXfeAjwYM8ysQ"}'          
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.BEARER }}"}'          
+          data: '{"buildName": "$BUILD_ID"}'        
       
-      - name: Set up k3s
-        uses: debianmaster/actions-k3s@master
-        id: k3s
-        with:
-          version: 'latest' 
-          
-      - name: Deploy services
-        run: |
-          kubectl create secret docker-registry aws-secret --docker-server=159616352881.dkr.ecr.eu-west-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password)          
-          kubectl apply -R -f ./k3s/                      
-          
-      - name: Wait for fetching containers
-        run: |
-          chmod +rx ./k3s-deployment/wait-for-pods-statuses.sh          
-          ./k3s-deployment/wait-for-pods-statuses.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
-          
-      - name: Wait for pods
-        run: |
-          chmod +rx ./k3s-deployment/wait-for-pods-phases.sh          
-          ./k3s-deployment/wait-for-pods-phases.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
-          
-      - name: Fetch deployment repo
-        run: |             
-             export GITHUB_TOKEN=
-             echo $GITHUB_TOKEN >> token.txt
-             git clone https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git tests
-             git remote set-url origin https://$GITHUB_TOKEN@github.com/Sealights/microservices-demo-tests.git
-             
-      - name: Install testing tools     
-        run: |             
-             cd tests             
-             npm install
-             
-      - name: Wait for external IPs
-        run: |           
-            chmod +rx ./k3s-deployment/wait-for-external-ip.sh        
-            ./k3s-deployment/wait-for-external-ip.sh $K3S_MAX_RETRY_COUNT $SLEEP_DURATION
-               
-      - name: Test Frontend availability
-        run: |
-             export BOUTIQUE_FRONTEND_IP=$(cat test-entrypoint.txt)             
-             ping $BOUTIQUE_FRONTEND_IP -c 5
-               
-      - name: Run e2e tests     
-        run: |
-             export BOUTIQUE_FRONTEND_IP=$(cat test-entrypoint.txt)                          
-             echo "TEST: $BOUTIQUE_FRONTEND_IP"
-             export TEST_ENDPOINT=http://$BOUTIQUE_FRONTEND_IP:8080
-             echo "Test entry point: $TEST_ENDPOINT"
-             
-             cd tests
-             npm run test
